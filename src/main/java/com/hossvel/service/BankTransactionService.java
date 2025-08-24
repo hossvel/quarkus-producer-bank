@@ -1,5 +1,6 @@
 package com.hossvel.service;
 
+import com.hossvel.kafka.BankTransactionProducer;
 import com.hossvel.model.BankTransaction;
 import com.hossvel.repository.BankTransactionRepository;
 import io.quarkus.hibernate.reactive.panache.common.WithSession;
@@ -16,11 +17,21 @@ public class BankTransactionService implements IBankTransactionService {
     @Inject
     BankTransactionRepository bankTransactionRepository;
 
+    @Inject
+    BankTransactionProducer bankTransactionProducer;
+
+
     @WithSession
     @Override
     public Uni<BankTransaction> create(BankTransaction bankTransaction) {
         bankTransaction.setTimestamp(Instant.now());
-        return bankTransactionRepository.save(bankTransaction);
+
+
+       Uni<BankTransaction> txUni = bankTransactionRepository.save(bankTransaction);
+
+        bankTransactionProducer.send(bankTransaction);
+
+        return txUni;
     }
 
     @WithSession
