@@ -29,7 +29,7 @@ public class BankTransactionService implements IBankTransactionService {
 
        Uni<BankTransaction> txUni = bankTransactionRepository.save(bankTransaction);
 
-        bankTransactionProducer.send(bankTransaction);
+        bankTransactionProducer.sendBankAccountEvent(bankTransaction.getAccountId(),bankTransaction.getAmount(),bankTransaction.getType());
 
         return txUni;
     }

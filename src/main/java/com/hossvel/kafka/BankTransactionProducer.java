@@ -16,15 +16,11 @@ import java.util.concurrent.CompletionStage;
 @ApplicationScoped
 public class BankTransactionProducer {
 
-
-    @Inject
     @Channel("bank-transactions")
-    Emitter<String> emitter;
+    Emitter<BankTransaction> emitter;
 
-    public void send(BankTransaction tx) {
-         emitter.send(String.valueOf(tx)); // ✅ Quarkus uses your serializer automatically
+    public void sendBankAccountEvent(String accountId, double amount, String type) {
+        emitter.send(new BankTransaction(accountId, amount, type));
     }
-
-
 
 }
