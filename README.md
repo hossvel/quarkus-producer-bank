@@ -60,8 +60,8 @@ If you want to learn more about building native executables, please consult <htt
 
 ## Provided Code
 
-### REST
+### Run
+execute in powershell: docker-compose up
+review msv fraude for topic
 
-Easily start your REST Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
+l -X POST http://localhost:8090/transactions -H "Content-Type: application/json" -d '{"accountId": "123456789","amount": 14000.00,"type": "DEPOSIT"}'
