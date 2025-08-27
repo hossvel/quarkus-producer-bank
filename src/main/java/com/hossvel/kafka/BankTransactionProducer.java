@@ -19,8 +19,8 @@ public class BankTransactionProducer {
     @Channel("bank-transactions")
     Emitter<BankTransaction> emitter;
 
-    public void sendBankAccountEvent(String accountId, double amount, String type) {
-        emitter.send(new BankTransaction(accountId, amount, type));
+    public void sendBankAccountEvent(BankTransaction bankTransaction) {
+        emitter.send(bankTransaction);
     }
 
 }
